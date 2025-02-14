@@ -1,0 +1,65 @@
+/* Estils CSS per a la secció de docència */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+.teaching-section {
+    margin-bottom: 40px;
+}
+
+.teaching-section h2 {
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 10px;
+}
+
+.course {
+    margin-bottom: 20px;
+}
+
+.course-title {
+    font-size: 1.5em;
+    color: #4CAF50;
+}
+
+.course-description {
+    font-size: 1em;
+    color: #666;
+}
+
+.course-details {
+    font-size: 0.9em;
+    color: #999;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
