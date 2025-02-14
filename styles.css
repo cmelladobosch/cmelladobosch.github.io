@@ -12,6 +12,8 @@ body {
     color: white;
     text-align: center;
     padding: 1em 0;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -62,4 +64,5 @@ h1, h2, h3 {
     position: fixed;
     width: 100%;
     bottom: 0;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
 }
