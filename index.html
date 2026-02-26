@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ca">
+<html lang="ca" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -7,18 +7,24 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="site-header">
         <div class="wrap">
-            <h1 class="site-title">Carles Mellado Bosch - institut Montilivi</h1>
+            <h1 class="site-title">Carles Mellado Bosch <span class="subtitle">— Institut Montilivi</span></h1>
             <nav class="main-nav" aria-label="Navegació principal">
                 <ul>
                     <li><a href="#about">Sobre mi</a></li>
+                    <li><a href="#carrera">Carrera</a></li>
                     <li><a href="#projects">Projectes</a></li>
-                    <li><a href="#animacions">Animacions</li>
-                    <li><a href="#contact">Contacte</a></li>
+                    <li><a href="#animacions">Animacions</a></li>
+                    <li>
+                        <button id="theme-toggle" class="theme-toggle" aria-label="Canviar mode fosc/clar">
+                            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        </button>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -26,52 +32,188 @@
 
     <main class="wrap">
         <section id="about" class="hero" aria-labelledby="about-title">
-            <h2 id="about-title">Professor d'Informàtica</h2>
-            <p>Sóc professor d'informàtica amb experiència en consultoria informàtica i desenvolupament web. Aquí trobaràs projectes i recursos educatius.</p>
+            <div class="hero-content">
+                <h2 id="about-title">Professor i consultor d'Informàtica</h2>
+                <p id="about-text">Sóc professor d'informàtica amb experiència en consultoria informàtica i desenvolupament web.</p>
+            </div>
+        </section>
+
+        <section id="carrera" class="carrera" aria-labelledby="carrera-title">
+            <h2 id="carrera-title" class="section-title">Carrera professional</h2>
+            <p class="section-desc"><strong>Formació:</strong> Enginyer tècnic en informàtica</p>
+            <p class="section-desc">Des de l'any 1994, he estat treballant com a professor d'informàtica a l'institut Montilivi, impartint classes de formació professional. A més, he participat en diversos projectes educatius i d'innovació tecnològica. A continuació trobaràs un cronograma resumit per anys.</p>
+
+            <div class="timeline-wrapper" aria-hidden="false">
+                <ol class="timeline">
+                    <li class="event"><time datetime="1994">1990</time><div class="event-title">POO Pascal</div></li>
+                    <li class="event"><time datetime="1994">1991</time><div class="event-title">Programació CAD/CAM</div></li>
+                    <li class="event"><time datetime="1994">1992</time><div class="event-title">POO Pascal</div></li>
+                    <li class="event"><time datetime="1994">1993</time><div class="event-title">Programació CAD/CAM</div></li>
+                    <li class="event"><time datetime="1994">1994</time><div class="event-title">Preogramació Visual Basic</div></li>
+                    <li class="event"><time datetime="1995">1995</time><div class="event-title">COBOL</div></li>
+                    <li class="event"><time datetime="1996">1996</time><div class="event-title">Programació bàsica</div></li>
+                    <li class="event"><time datetime="1997">1997</time><div class="event-title">Anàlisis de Sistemes</div></li>
+                    <li class="event"><time datetime="1998">1998</time><div class="event-title">Programació avançada</div></li>
+                    <li class="event"><time datetime="1999">1999</time><div class="event-title">Projectes</div></li>
+                    <li class="event"><time datetime="2000">2000</time><div class="event-title">Web</div></li>
+                    <li class="event"><time datetime="2001">2001</time><div class="event-title">Xarxes</div></li>
+                    <li class="event"><time datetime="2002">2002</time><div class="event-title">Funcions d'un sistema</div></li>
+                    <li class="event"><time datetime="2003">2003</time><div class="event-title">Bases de dades</div></li>
+                    <li class="event"><time datetime="2004">2004</time><div class="event-title">Xarxes</div></li>
+                    <li class="event"><time datetime="2005">2005</time><div class="event-title">Sistemes informàtics</div></li>
+                    <li class="event"><time datetime="2006">2006</time><div class="event-title">Programació</div></li>
+                    <li class="event"><time datetime="2007">2007</time><div class="event-title">Xarxes CISCO CCNA</div></li>
+                    <li class="event"><time datetime="2008">2008</time><div class="event-title">Sistemes informàtics</div></li>
+                    <li class="event"><time datetime="2009">2009</time><div class="event-title">Programació ASP</div></li>
+                    <li class="event"><time datetime="2010">2010</time><div class="event-title">Xarxes</div></li>
+                    <li class="event"><time datetime="2011">2011</time><div class="event-title">Administració de Sistemes</div></li>
+                    <li class="event"><time datetime="2012">2012</time><div class="event-title">XML</div></li>
+                    <li class="event"><time datetime="2013">2013</time><div class="event-title">Bases de dades</div></li>
+                    <li class="event"><time datetime="2014">2014</time><div class="event-title">Web</div></li>
+                    <li class="event"><time datetime="2015">2015</time><div class="event-title">Xarxes</div></li>
+                    <li class="event"><time datetime="2016">2016</time><div class="event-title">Web</div></li>
+                    <li class="event"><time datetime="2017">2017</time><div class="event-title">PHP</div></li>
+                    <li class="event"><time datetime="2018">2018</time><div class="event-title">Projecte</div></li>
+                    <li class="event"><time datetime="2019">2019</time><div class="event-title">Programació</div></li>
+                    <li class="event"><time datetime="2020">2020</time><div class="event-title">Backend</div></li>
+                    <li class="event"><time datetime="2021">2021</time><div class="event-title">Projecte</div></li>
+                    <li class="event"><time datetime="2022">2022</time><div class="event-title">Pràctiques</div></li>
+                    <li class="event"><time datetime="2023">2023</time><div class="event-title">Backend</div></li>
+                    <li class="event"><time datetime="2024">2024</time><div class="event-title">Projecte Web</div></li>
+                    <li class="event"><time datetime="2025">2025</time><div class="event-title">MVC Symfony</div></li>
+                    <li class="event"><time datetime="2026">2026</time><div class="event-title">InnovaFP</div></li>
+                </ol>
+            </div>
         </section>
 
         <section id="projects" class="projects" aria-labelledby="projects-title">
-            <h2 id="projects-title">Projectes destacats</h2>
+            <h2 id="projects-title" class="section-title">Projectes destacats</h2>
             <div class="grid">
                 <article class="card">
-                    <h3>Projecte 1</h3>
-                    <p>Descripció curta del projecte 1.</p>
+                    <div class="card-content">
+                        <h3>Intranet institut</h3>
+                        <p>Desenvolupament d'una intranet per a l'institut Montilivi, com a suport educatiu a la gestió integral del centre.</p>
+                        <p class="meta">Inici: Curs 2000-2001 (Versió 1, 2 i actual 3a).</p>
+                    </div>
+                    <a href="https://www.institutmontilivi.cat" class="button" target="_blank" rel="noopener">Visitar intranet</a>
                 </article>
                 <article class="card">
-                    <h3>Projecte 2</h3>
-                    <p>Descripció curta del projecte 2.</p>
+                    <div class="card-content">
+                        <h3>Projectes d'Innovació FP</h3>
+                        <p>Participació en l'equip impulsor de projectes d'innovació en formació professional.</p>
+                        <p class="meta">Actualment: Implantació de IA local i millora UX.</p>
+                    </div>
+                    <a href="#" class="button" target="_blank" rel="noopener">+ Info projecte</a>
                 </article>
             </div>
         </section>
 
         <section id="animacions" class="animacions" aria-labelledby="animacions-title">
-            <h2 id="animacions-title">Animacions</h2>
-            <p>Demostracions i animacions interactives.</p>
+            <h2 id="animacions-title" class="section-title">Animacions</h2>
+            <p class="section-desc">Demostracions i animacions interactives per facilitar l'aprenentatge.</p>
             <div class="grid">
                 <article class="card">
-                    <h3>Animació HTTP API JWT</h3>
-                    <p>Animació demostrativa del protocol HTTP en una API REST</p>
+                    <div class="card-content">
+                        <h3>Animació HTTP API JWT</h3>
+                        <p>Animació demostrativa del protocol HTTP en una API REST.</p>
+                    </div>
                     <a href="animacions/http-api-jwt/v2/index.html" class="button" target="_blank" rel="noopener">Veure animació</a>
                 </article>
                 <article class="card">
-                    <h3>Animació GIT</h3>
-                    <p>Animació demostrativa del protocol GIT / GitHub / Docker</p>
+                    <div class="card-content">
+                        <h3>Animació GIT</h3>
+                        <p>Animació demostrativa del protocol GIT / GitHub / Docker.</p>
+                    </div>
                     <a href="animacions/git/v3/index.html" class="button" target="_blank" rel="noopener">Veure animació</a>
                 </article>
             </div>
-            
         </section>
 
-        <section id="contact" aria-labelledby="contact-title">
-            <h2 id="contact-title">Contacte</h2>
-            <p>Correu: <a href="mailto:cmellado@institutmontilivi.cat">cmellado@institutmontilivi.cat</a></p>
+        <section id="contact" aria-labelledby="contact-title" class="contact">
+            <h2 id="contact-title" class="section-title">Contacte</h2>
+            <div class="card">
+                <p>Pots contactar amb mi a través del correu electrònic:</p>
+                <a href="mailto:cmellado@institutmontilivi.cat" class="contact-link">cmellado@institutmontilivi.cat</a>
+            </div>
         </section>
     </main>
 
     <footer class="site-footer">
         <div class="wrap">
-            <p>&copy; 2026 Professor d'Informàtica de l'institut Montilivi.</p>
+            <p>&copy; 2026 Carles Mellado Bosch. Professor d'Informàtica de l'institut Montilivi.</p>
         </div>
     </footer>
+
+    <script>
+        // --- 1. Gestió del Mode Fosc / Clar ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // Comprova la preferència guardada o la del sistema
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+        } else if (systemPrefersDark) {
+            htmlElement.setAttribute('data-theme', 'dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // --- 2. Efecte de text binari (original mantingut) ---
+        document.addEventListener('DOMContentLoaded', function(){
+            const el = document.getElementById('about-text');
+            if(!el) return;
+            const original = el.textContent;
+            const chars = Array.from(original);
+            el.innerHTML = '';
+            chars.forEach(ch => {
+                const span = document.createElement('span');
+                span.className = 'bin-char';
+                if (ch.trim() === '') {
+                    span.textContent = ch;
+                    span.classList.add('space');
+                } else {
+                    span.textContent = Math.random() < 0.5 ? '0' : '1';
+                }
+                el.appendChild(span);
+            });
+
+            let i = 0;
+            function revealNext(){
+                while(i < chars.length && chars[i].trim() === ''){
+                    el.children[i].textContent = chars[i];
+                    i++;
+                }
+                if(i >= chars.length) return true;
+                el.children[i].textContent = chars[i];
+                el.children[i].classList.add('revealed');
+                i++;
+                return i >= chars.length;
+            }
+
+            const flicker = setInterval(()=>{
+                for(let j = i; j < chars.length; j++){
+                    if(chars[j].trim() === '') continue;
+                    el.children[j].textContent = Math.random() < 0.5 ? '0' : '1';
+                }
+            }, 120);
+
+            const revealInterval = setInterval(()=>{
+                const done = revealNext();
+                if(done){
+                    clearInterval(revealInterval);
+                    clearInterval(flicker);
+                }
+            }, 150); // Una mica més ràpid per a una millor UX
+        });
+    </script>
 </body>
 </html>
