@@ -145,27 +145,31 @@
     </footer>
 
     <script>
-        // --- 1. Gestió del Mode Fosc / Clar ---
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-        
-        // Comprova la preferència guardada o la del sistema
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (savedTheme) {
-            htmlElement.setAttribute('data-theme', savedTheme);
-        } else if (systemPrefersDark) {
-            htmlElement.setAttribute('data-theme', 'dark');
-        }
+            // --- 1. Gestió del Mode Fosc / Clar ---
+            (function(){
+                const themeToggleBtn = document.getElementById('theme-toggle');
+                const htmlElement = document.documentElement;
+                const body = document.body;
 
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            htmlElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        });
+                const savedTheme = localStorage.getItem('theme');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                let initialTheme = 'light';
+                if (savedTheme === 'dark' || savedTheme === 'light') initialTheme = savedTheme;
+                else if (systemPrefersDark) initialTheme = 'dark';
+
+                htmlElement.setAttribute('data-theme', initialTheme);
+                if(initialTheme === 'dark') body.classList.add('dark'); else body.classList.remove('dark');
+
+                if(!themeToggleBtn) return;
+                themeToggleBtn.addEventListener('click', () => {
+                    const current = htmlElement.getAttribute('data-theme') || 'light';
+                    const next = current === 'dark' ? 'light' : 'dark';
+                    htmlElement.setAttribute('data-theme', next);
+                    if(next === 'dark') body.classList.add('dark'); else body.classList.remove('dark');
+                    localStorage.setItem('theme', next);
+                });
+            })();
 
         // --- 2. Efecte de text binari (original mantingut) ---
         document.addEventListener('DOMContentLoaded', function(){
