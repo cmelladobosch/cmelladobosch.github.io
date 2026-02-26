@@ -1,50 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio de Professor d'Informàtica</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Professor d'Informàtica — Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Benvingut al meu Portfolio</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">Sobre Mi</a></li>
-                <li><a href="#projects">Projectes</a></li>
-                <li><a href="#contact">Contacte</a></li>
-            </ul>
-        </nav>
+    <header class="site-header">
+        <div class="wrap">
+            <h1 class="site-title">Nom Cognoms</h1>
+            <nav class="main-nav" aria-label="Navegació principal">
+                <ul>
+                    <li><a href="#about">Sobre mi</a></li>
+                    <li><a href="#projects">Projectes</a></li>
+                    <li><a href="#contact">Contacte</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <section id="about">
-        <h2>Sobre Mi</h2>
-        <p>Sóc un professor d'informàtica amb experiència en ensenyar programació, desenvolupament web i altres tecnologies de la informació.</p>
-    </section>
+    <main class="wrap">
+        <section id="about" class="hero" aria-labelledby="about-title">
+            <h2 id="about-title">Professor d'Informàtica</h2>
+            <p>Sóc professor d'informàtica amb experiència en programació i desenvolupament web. Aquí trobaràs projectes i recursos educatius.</p>
+        </section>
 
-    <section id="projects">
-        <h2>Projectes</h2>
-        <ul>
-            <li>
-                <h3>Projecte 1</h3>
-                <p>Descripció del projecte 1.</p>
-            </li>
-            <li>
-                <h3>Projecte 2</h3>
-                <p>Descripció del projecte 2.</p>
-            </li>
-            <!-- Afegeix més projectes aquí -->
-        </ul>
-    </section>
+        <section id="projects" class="projects" aria-labelledby="projects-title">
+            <h2 id="projects-title">Projectes destacats</h2>
+            <div class="grid">
+                <article class="card">
+                    <h3>Projecte 1</h3>
+                    <p>Descripció curta del projecte 1.</p>
+                </article>
+                <article class="card">
+                    <h3>Projecte 2</h3>
+                    <p>Descripció curta del projecte 2.</p>
+                </article>
+            </div>
+        </section>
 
-    <section id="contact">
-        <h2>Contacte</h2>
-        <p>Pots contactar-me a través del correu electrònic: <a href="mailto:cmellado@institutmontilivi.cat">cmellado@institutmontilivi.cat</a></p>
-    </section>
+        <section id="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title">Contacte</h2>
+            <p>Correu: <a href="mailto:cmellado@institutmontilivi.cat">cmellado@institutmontilivi.cat</a></p>
+        </section>
+    </main>
 
-    <footer>
-        <p>&copy; 2025 Professor d'Informàtica. Tots els drets reservats.</p>
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>&copy; 2026 Professor d'Informàtica. Tots els drets reservats.</p>
+        </div>
     </footer>
 </body>
 </html>

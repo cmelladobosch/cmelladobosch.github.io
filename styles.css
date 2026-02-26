@@ -1,68 +1,57 @@
-/* Estils CSS per a la secció de docència */
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+:root{
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --text:#0f1724;
+    --muted:#586174;
+    --accent:#0ea5a4;
+    --radius:12px;
+    --max-width:1100px;
 }
 
-.header {
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    padding: 1em 0;
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.wrap{
+    max-width:var(--max-width);
+    margin:0 auto;
+    padding:28px 20px;
 }
 
-h1, h2, h3 {
-    color: #333;
+.site-header{
+    background:linear-gradient(90deg,var(--accent),#06b6d4);
+    color:white;
+}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.site-title{font-size:1.25rem;margin:0;font-weight:600}
+.main-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:14px}
+.main-nav a{color:inherit;text-decoration:none;padding:8px 10px;border-radius:8px;transition:background .15s}
+.main-nav a:hover{background:rgba(255,255,255,0.08)}
+
+.hero{background:transparent;padding:36px 0}
+.hero h2{margin:0 0 8px;font-size:1.5rem}
+.hero p{margin:0;color:var(--muted)}
+
+.projects{padding:18px 0}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(15,23,36,0.06)}
+.card h3{margin:0 0 6px;font-size:1.05rem}
+.card p{margin:0;color:var(--muted)}
+
+.site-footer{padding:18px 0;background:transparent;color:var(--muted);border-top:1px solid rgba(15,23,36,0.04)}
+
+@media (prefers-color-scheme:dark){
+    :root{--bg:#071023;--card:#071428;--text:#e6eef6;--muted:#9fb0c8;--accent:#06b6d4}
+    .site-header{background:linear-gradient(90deg,var(--accent),#0891b2)}
 }
 
-.teaching-section {
-    margin-bottom: 40px;
-}
-
-.teaching-section h2 {
-    border-bottom: 2px solid #4CAF50;
-    padding-bottom: 10px;
-}
-
-.course {
-    margin-bottom: 20px;
-}
-
-.course-title {
-    font-size: 1.5em;
-    color: #4CAF50;
-}
-
-.course-description {
-    font-size: 1em;
-    color: #666;
-}
-
-.course-details {
-    font-size: 0.9em;
-    color: #999;
-}
-
-.footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1em 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+@media (max-width:520px){
+    .site-header .wrap{flex-direction:column;align-items:flex-start}
+    .main-nav ul{flex-wrap:wrap}
 }
