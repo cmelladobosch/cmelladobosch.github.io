@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de CPU - v1.1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div
+        style="display: flex; justify-content: space-between; align-items: flex-end; max-width: 1400px; width: 100%; margin-bottom: 20px;">
+        <div style="display: flex; align-items: baseline; gap: 15px;">
+            <h1 style="margin-bottom: 0;">SIMULADOR DE CPU</h1>
+            <h2 style="margin: 0; padding-bottom: 1px;">v1.1</h2>
+        </div>
+        <button id="btn-help"
+            style="flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2em; border-color: var(--accent-blue); color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.1); padding: 0; cursor: pointer; transition: all 0.2s;">?</button>
+    </div>
+
+    <div class="container wide">
+        <!-- Columna 1: Descripció i Editor -->
+        <div class="panel">
+            <h2 class="panel-title">Descripció del Programa</h2>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <input type="text" id="code-desc" placeholder="Ex: Fes un bucle del 5 a l'1..." class="desc-input">
+                <button id="btn-ai"
+                    style="flex: 0 0 auto; background-color: var(--accent-purple); color: #0d1117; border-color: var(--accent-purple);">Generar
+                    (IA)</button>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <input type="password" id="api-key" placeholder="Posa aquí la teva API Key de Gemini" class="desc-input"
+                    style="flex: 1; font-size: 0.8em; padding: 5px 10px;">
+                <select id="ai-model" class="desc-input"
+                    style="flex: 1; font-size: 0.8em; padding: 5px 10px; background-color: var(--panel-bg); cursor: pointer;" disabled>
+                    <option value="">Introdueix l'API Key...</option>
+                </select>
+            </div>
+
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; margin-top: 20px;">
+                <h2 class="panel-title" style="margin-bottom: 0; border-bottom: none;">Editor de Codi</h2>
+                <button id="btn-clear"
+                    style="flex: 0; padding: 5px 15px; font-size: 0.8em; border-color: #f85149; background-color: transparent;">Clear</button>
+            </div>
+            <textarea id="code-editor" spellcheck="false" placeholder="Escriu codi aquí...
+ex: (Càlcul i Format: RAM[0] * RAM[1] = RAM[2])
+ex:
+LOAD 5
+STA 0
+LOAD 10
+STA 1
+LOAD 50
+STA 2
+OUTFMT 0 1 2
+HLT"></textarea>
+        </div>
+
+        <!-- Columna 2: Controls i CPU -->
+        <div class="panel">
+            <h2 class="panel-title">Panell de Control</h2>
+            <div class="controls">
+                <button id="btn-run">Run</button>
+                <button id="btn-step">Step</button>
+                <button id="btn-reset">Reset</button>
+            </div>
+
+            <h2 class="panel-title mt-20">Estat de la CPU</h2>
+            <div class="register-group">
+                <label for="reg-pc">PC (Program Counter)</label>
+                <input type="text" id="reg-pc" value="0" readonly>
+            </div>
+            <div class="register-group">
+                <label for="reg-acc">ACC (Acumulador)</label>
+                <input type="text" id="reg-acc" value="0" readonly>
+            </div>
+            <div class="register-group">
+                <label for="reg-ir">IR (Instruction)</label>
+                <input type="text" id="reg-ir" value="-" readonly>
+            </div>
+
+            <div id="status-msg" class="status-msg">Preparat.</div>
+        </div>
+
+        <!-- Columna 3: RAM i Output -->
+        <div class="panel">
+            <h2 class="panel-title">Memòria RAM</h2>
+            <div id="ram-container" class="ram-grid">
+                <!-- Es generaran 16 cel·les de memòria automàticament -->
+            </div>
+
+            <h2 class="panel-title mt-20">Pantalla de Visualització</h2>
+            <div id="output-screen" class="output-box terminal-stretch"></div>
+        </div>
+    </div>
+
+    <!-- Modal d'Ajuda -->
+    <div id="help-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Documentació del Simulador</h2>
+                <button id="btn-close-help" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Funcionament Bàsic</h3>
+                <p>Aquest simulador executa el cicle clàssic (Fetch-Decode-Execute) de forma visual. Escriu el programa
+                    a l'<b>Editor de Codi</b> instrucció per instrucció, i prem <b>Run</b> per executar-lo
+                    automàticament o <b>Step</b> per anar pas a pas.</p>
+                <p>També pots utilitzar l'<b>Assistent d'IA integrat</b>: escriu al camp "Descripció" allò que vols que
+                    faci el teu programa, desenfunda i enganxa la teva <i>API Key de Gemini</i> a sota, prement "Generar
+                    (IA)". El codi en assemblador s'escriurà tot solet preparat per ser simulat!</p>
+
+                <h3>Conjunt d'Instruccions (ISA)</h3>
+                <ul class="isa-list">
+                    <li><code><b>LOAD</b> [num]</code> - Guarda el número directe <code>[num]</code> a l'Acumulador
+                        (ACC).</li>
+                    <li><code><b>LDA</b> [dir]</code> - Llegeix el número existent a la memòria RAM en la posició
+                        <code>[dir]</code> i el guarda a l'ACC.
+                    </li>
+                    <li><code><b>LDAI</b> [dir]</code> - <i>Load Accumulator Indirect</i>: Llegeix el número que hi ha a la RAM a la posició <code>[dir]</code>, l'utilitza com a nova adreça (punter), i guarda a l'ACC el valor d'aquella adreça final.
+                    </li>
+                    <li><code><b>STA</b> [dir]</code> - Guarda el valor actual de l'ACC a la memòria RAM en la posició
+                        <code>[dir]</code>.
+                    </li>
+                    <li><code><b>ADD</b> [dir]</code> - Suma a l'ACC el valor que hi ha a la RAM a la posició
+                        <code>[dir]</code>.
+                    </li>
+                    <li><code><b>SUB</b> [dir]</code> - Resta a l'ACC el valor que hi ha a la RAM a la posició
+                        <code>[dir]</code>.
+                    </li>
+                    <li><code><b>JNZ</b> [línia]</code> - <i>Jump if Not Zero</i>: Si l'ACC no és exacte a '0', la CPU
+                        salta i continua a la <code>[línia]</code> demanada (comencen per 0).</li>
+                    <li><code><b>JMP</b> [línia]</code> - <i>Jump</i>: Salt incondicional. La CPU salta a la
+                        <code>[línia]</code> demanada i continua independentment de l'ACC.
+                    </li>
+                    <li><code><b>IN</b></code> - Obre una finestra per demanar que teclegis. Si introdueixes un número, el guardarà directament. Si introdueixes text, en guardarà el codi ASCII de la primera lletra a l'ACC.</li>
+                    <li><code><b>INS</b> [dir]</code> - <i>Input String</i>: Obre una finestra de text llarg per escriure una paraula o frase. Descompondrà el text en caràcters ASCII i els guardarà ocupant posicions consecutives a la RAM començant des de <code>[dir]</code> fins a posar de límit un 0 al final.</li>
+                    <li><code><b>OUT</b></code> - Imprimeix el valor numèric que hi hagi a l'ACC a la Pantalla de
+                        Visualització (amb salt de línia).</li>
+                    <li><code><b>OUTC</b></code> - Agafa el valor numèric de l'ACC, el converteix al seu caràcter text
+                        ASCII i l'imprimeix (sense salt de línia).</li>
+                    <li><code><b>OUTS</b> [dir]</code> - <i>Output String</i>: Llegeix caràcters consecutius de la RAM començant des de <code>[dir]</code> convertint-los de nou a text, fins a topar amb un 0, mostrant així tota la frase d'un cop.</li>
+                    <li><code><b>OUTFMT</b> [dir1] [dir2] [dir3]</code> - Imprimeix el text de "X per Y = Z" basat en
+                        els valors emmagatzemats a les adreces RAM corresponents.</li>
+                    <li><code><b>HLT</b></code> - <i>Halt</i>: Atura i tanca correctament l'execució del programa.</li>
+                </ul>
+
+                <h3>Apunts</h3>
+                <p>La RAM de la CPU pot guardar valors des de la casella <b>0</b> fins a la <b>15</b>.<br>El codi ignora
+                    automàticament qualsevol línia que comenci per "<b>ex:</b>", fent que sigui perfecte per deixar
+                    notes/comentaris d'ús.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

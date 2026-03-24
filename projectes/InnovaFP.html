@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnovaFP - Projecte IA Local - Institut Montilivi</title>
+    <!-- Importar Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Importar Google Fonts: 'Outfit' per a un look modern i tecnològic -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a; /* Slate 900 base */
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.15) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+        
+        /* Animació subtil per al fons dels badges */
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(56, 189, 248, 0.5); box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+            50% { border-color: rgba(99, 102, 241, 0.8); box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); }
+        }
+        
+        .glow-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glow-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.3);
+        }
+
+        .tech-pill {
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            color: #38bdf8;
+        }
+    </style>
+</head>
+<body class="text-slate-200 flex flex-col items-center justify-center p-4 sm:p-8">
+
+    <!-- Contenidor Principal tipus "Poster" -->
+    <main class="w-full max-w-6xl bg-slate-900/80 backdrop-blur-xl border border-slate-700 rounded-3xl shadow-2xl overflow-hidden relative">
+        
+        <!-- Element decoratiu de fons -->
+        <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-cyan-500 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-indigo-600 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+
+        <!-- CAPÇALERA DEL PROJECTE -->
+        <div class="relative z-10 text-center pt-12 pb-8 px-6 border-b border-slate-700/50">
+            <!-- Logos / Marca -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8 mb-6 opacity-90">
+                <span class="text-lg tracking-widest font-bold uppercase text-slate-400">Institut Montilivi</span>
+                <span class="hidden sm:block text-slate-600">•</span>
+                <span class="text-lg tracking-widest font-bold uppercase text-cyan-400">InnovaFP</span>
+            </div>
+
+            <!-- Títol Principal -->
+            <h1 class="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-indigo-300 mb-4 leading-tight">
+                Implementem i usem IA local
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-light">
+                Implementació d'infraestructura d'Intel·ligència Artificial al centre per al desenvolupament, auditoria i ús acadèmic.
+            </p>
+
+            <!-- Badges de Tipologia -->
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-sm font-bold uppercase tracking-wide">Projecte Intermodular</span>
+                <span class="px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-sm font-bold uppercase tracking-wide">Projecte Intercicle</span>
+                <span class="px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-sm font-bold uppercase tracking-wide">Projecte Intercentres</span>
+            </div>
+        </div>
+
+        <!-- COS CENTRAL: L'ECOSISTEMA -->
+        <div class="relative z-10 p-6 sm:p-12">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                
+                <!-- CARD 1: DAW (Desenvolupadors) -->
+                <div class="glow-card bg-slate-800/50 p-6 rounded-2xl border border-slate-700 flex flex-col h-full relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M14.6 16.6l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4zm-5.2 0L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4z"/></svg>
+                    </div>
+                    <div class="mb-4 text-cyan-400">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">CFGS DAW</h3>
+                    <div class="text-xs font-bold text-cyan-500 uppercase tracking-wider mb-4">Integració i Desenvolupament</div>
+                    <p class="text-slate-300 flex-grow">
+                        Utilització de la infraestructura com a <strong class="text-white">Webservice (API)</strong> per crear aplicacions locals intel·ligents sense dependre del núvol.
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-slate-700 text-sm text-slate-400">
+                        <span class="block">• Backend amb LLMs</span>
+                        <span class="block">• RAG (Retrieval-Augmented Generation)</span>
+                    </div>
+                </div>
+
+                <!-- CARD 2: CIBERSEGURETAT (Auditors) -->
+                <div class="glow-card bg-slate-800/50 p-6 rounded-2xl border border-slate-700 flex flex-col h-full relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    </div>
+                    <div class="mb-4 text-indigo-400">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Ciberseguretat</h3>
+                    <div class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-4">Suport i Auditoria</div>
+                    <p class="text-slate-300 flex-grow">
+                        Responsables del desplegament segur, hardening del servidor, auditories de privacitat de les dades i suport tècnic.
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-slate-700 text-sm text-slate-400">
+                        <span class="block">• Pentesting d'APIs d'IA</span>
+                        <span class="block">• Gestió de logs i accessos</span>
+                    </div>
+                </div>
+
+                <!-- CARD 3: USUARIS (Altres CF / Centres) -->
+                <div class="glow-card bg-slate-800/50 p-6 rounded-2xl border border-slate-700 flex flex-col h-full relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                    </div>
+                    <div class="mb-4 text-purple-400">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Altres Cicles i Centres</h3>
+                    <div class="text-xs font-bold text-purple-500 uppercase tracking-wider mb-4">Usuaris Finals</div>
+                    <p class="text-slate-300 flex-grow">
+                        Accés democratitzat a la IA mitjançant interfície de <strong>Chatbot</strong> privada. Obert a col·laboració amb altres centres educatius.
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-slate-700 text-sm text-slate-400">
+                        <span class="block">• Eina de suport a l'estudi</span>
+                        <span class="block">• Sense cost ni cessió de dades</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SECCIÓ PROJECTE DESTACAT: De UI Clàssica a LLMs -->
+        <div class="relative z-10 px-6 sm:px-12 pb-12">
+            <div class="bg-slate-800/80 rounded-3xl border border-cyan-500/20 overflow-hidden">
+                <div class="bg-gradient-to-r from-cyan-900/40 to-slate-900/40 px-8 py-4 border-b border-slate-700 flex justify-between items-center flex-wrap gap-4">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                        Projecte Pilot DAW: Natural Language UI
+                    </h3>
+                    <span class="text-xs font-mono text-cyan-300 border border-cyan-500/30 px-3 py-1 rounded bg-cyan-900/20">STATUS: PROPOSAL</span>
+                </div>
+                
+                <div class="p-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                    <!-- Esquerra: El Concepte -->
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-lg font-semibold text-cyan-400 mb-2">💡 El Concepte</h4>
+                            <p class="text-slate-300 leading-relaxed">
+                                Transformació radical del desenvolupament web: passar dels <strong class="text-white">Formularis HTML estàtics</strong> (inputs rígids) a interfícies basades en <strong class="text-white">Prompts de Llenguatge Natural</strong>. L'usuari expressa la intenció, i la IA extreu les dades estructurades (JSON) pel backend.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold text-cyan-400 mb-2">🛠️ Solució Tecnològica</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-pill">Local LLM (Llama3/Mistral)</span>
+                                <span class="tech-pill">Ollama API</span>
+                                <span class="tech-pill">Structured Outputs (JSON Mode)</span>
+                                <span class="tech-pill">Pydantic / Zod Validators</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dreta: Anàlisi (Beneficis i Costos) -->
+                    <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700/50 text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Beneficis -->
+                            <div>
+                                <h5 class="text-green-400 font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Beneficis
+                                </h5>
+                                <ul class="space-y-2 text-slate-400">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500/50 mt-1">›</span>
+                                        <span>UX sense fricció: l'usuari parla com vol.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500/50 mt-1">›</span>
+                                        <span>Accessibilitat nativa per a tothom.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-green-500/50 mt-1">›</span>
+                                        <span>Gestió de dades complexes sense menús infinits.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Costos / Problemes -->
+                            <div>
+                                <h5 class="text-orange-400 font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    Reptes (Costos)
+                                </h5>
+                                <ul class="space-y-2 text-slate-400">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-orange-500/50 mt-1">›</span>
+                                        <span><strong>Latència:</strong> Més lent que un form clàssic.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-orange-500/50 mt-1">›</span>
+                                        <span><strong>Al·lucinacions:</strong> Risc de dades inventades.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-orange-500/50 mt-1">›</span>
+                                        <span>Consum alt de recursos de Hardware.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXEMPLE VISUAL: UI vs IA -->
+        <div class="relative z-10 px-6 sm:px-12 pb-16">
+            <div class="max-w-5xl mx-auto">
+                <h3 class="text-center text-xl font-bold text-slate-400 mb-8 uppercase tracking-widest">Exemple Pràctic: Quadern de Pràctiques (FCT)</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    
+                    <!-- CAS A: UI CLÀSSICA (Formulari) -->
+                    <div class="relative group">
+                        <!-- Label -->
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
+                            <span class="bg-slate-700 text-slate-300 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-slate-600 shadow-xl">Mètode Tradicional</span>
+                        </div>
+                        
+                        <div class="bg-slate-800 rounded-xl border border-slate-700 p-6 opacity-60 group-hover:opacity-100 transition-all duration-300 grayscale-[30%] group-hover:grayscale-0">
+                            <div class="bg-white/10 rounded-lg p-4 space-y-3 pointer-events-none select-none">
+                                <div class="h-4 bg-slate-600 rounded w-1/3 mb-4"></div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="space-y-1">
+                                        <div class="h-2 bg-slate-500 rounded w-10"></div>
+                                        <div class="h-8 bg-slate-600 rounded border border-slate-500"></div>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <div class="h-2 bg-slate-500 rounded w-10"></div>
+                                        <div class="h-8 bg-slate-600 rounded border border-slate-500"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="h-2 bg-slate-500 rounded w-16"></div>
+                                    <div class="h-8 bg-slate-600 rounded border border-slate-500 flex items-center px-2 text-xs text-slate-400">Seleccionar... ▼</div>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="h-2 bg-slate-500 rounded w-20"></div>
+                                    <div class="h-20 bg-slate-600 rounded border border-slate-500"></div>
+                                </div>
+                                <div class="h-8 bg-indigo-600/50 rounded w-full mt-2"></div>
+                            </div>
+                            <div class="mt-4 text-center">
+                                <p class="text-red-400/80 text-sm font-semibold flex justify-center items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    Fricció: Camps rígids i lents
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CAS B: NATURAL LANGUAGE UI (Prompt) -->
+                    <div class="relative transform md:scale-105 z-10">
+                         <!-- Label -->
+                         <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
+                            <span class="bg-gradient-to-r from-cyan-500 to-indigo-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg shadow-cyan-500/20">Mètode InnovaFP</span>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-indigo-900/80 to-slate-900/90 rounded-xl border border-cyan-500/50 p-6 shadow-[0_0_40px_-10px_rgba(34,211,238,0.2)] backdrop-blur-sm">
+                            
+                            <!-- Xat UI -->
+                            <div class="space-y-4 font-sans text-sm">
+                                <!-- Bot -->
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-cyan-600 flex-shrink-0 flex items-center justify-center text-white text-xs">🤖</div>
+                                    <div class="bg-slate-800 rounded-2xl rounded-tl-none p-3 text-cyan-100 border border-slate-700">
+                                        Quines tasques has realitzat avui?
+                                    </div>
+                                </div>
+
+                                <!-- User -->
+                                <div class="flex items-start gap-3 justify-end">
+                                    <div class="bg-indigo-600 rounded-2xl rounded-tr-none p-3 text-white shadow-lg">
+                                        He estat <span class="bg-indigo-500/50 px-1 rounded font-mono text-xs">4 hores</span> configurant el servidor Apache i revisant logs d'error.
+                                    </div>
+                                    <div class="w-8 h-8 rounded-full bg-indigo-500 flex-shrink-0 flex items-center justify-center text-white text-xs">🎓</div>
+                                </div>
+                            </div>
+
+                            <!-- Processament (Fletxa) -->
+                            <div class="flex items-center justify-center gap-2 my-3 text-cyan-400 text-xs font-mono opacity-80">
+                                <span class="animate-pulse">⚡ Processant amb Llama3...</span>
+                                <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                            </div>
+
+                            <!-- Resultat JSON -->
+                            <div class="bg-black/40 rounded-lg p-3 font-mono text-xs border-l-4 border-green-500 shadow-inner">
+                                <div class="text-slate-500 mb-1">// Dades guardades a BBDD</div>
+                                <div class="text-green-400">{</div>
+                                <div class="pl-4 text-cyan-300">"hores": <span class="text-yellow-300">4</span>,</div>
+                                <div class="pl-4 text-cyan-300">"categoria": <span class="text-yellow-300">"Sistemes"</span>,</div>
+                                <div class="pl-4 text-cyan-300">"resum": <span class="text-yellow-300">"Configuració Apache..."</span></div>
+                                <div class="text-green-400">}</div>
+                            </div>
+
+                            <div class="mt-4 text-center">
+                                <p class="text-cyan-400 text-sm font-semibold flex justify-center items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    Fluiditat: L'usuari parla, la màquina estructura
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- SEPARADOR -->
+        <div class="flex justify-center mb-12">
+            <div class="w-24 h-1 bg-slate-800 rounded-full"></div>
+        </div>
+
+        <!-- EXEMPLE 2: FINANCES (NOU) -->
+        <div class="relative z-10 px-6 sm:px-12 pb-16">
+            <div class="max-w-5xl mx-auto">
+                <h3 class="text-center text-xl font-bold text-slate-400 mb-8 uppercase tracking-widest">
+                    Exemple Pràctic: Administració i Finances
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    
+                    <!-- CAS A: Mètode Tradicional (Excel) -->
+                    <div class="relative group">
+                        <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
+                            <span class="bg-slate-700 text-slate-300 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider border border-slate-600 shadow-xl">Anàlisi Manual</span>
+                        </div>
+                        
+                        <div class="bg-slate-800 rounded-xl border border-slate-700 p-6 opacity-60 group-hover:opacity-100 transition-all duration-300 grayscale-[30%] group-hover:grayscale-0">
+                            <!-- Representació abstracta d'un Excel complex -->
+                            <div class="bg-white/5 rounded-lg p-1 space-y-1 pointer-events-none overflow-hidden font-mono text-[8px] text-slate-500 leading-tight">
+                                <div class="grid grid-cols-4 gap-1 border-b border-slate-600 pb-1 mb-1 font-bold text-slate-300">
+                                    <div>CONCEPTE</div><div>DEURE</div><div>HAVER</div><div>SALDO</div>
+                                </div>
+                                <div class="grid grid-cols-4 gap-1"><div>Vendes</div><div>12.500</div><div>0</div><div>12.500</div></div>
+                                <div class="grid grid-cols-4 gap-1"><div>Despeses</div><div>0</div><div>4.200</div><div>-4.200</div></div>
+                                <div class="grid grid-cols-4 gap-1"><div>Impostos</div><div>0</div><div>890</div><div>-890</div></div>
+                                <div class="grid grid-cols-4 gap-1"><div>Amort.</div><div>0</div><div>1.200</div><div>-1.200</div></div>
+                                <div class="grid grid-cols-4 gap-1 opacity-50"><div>...</div><div>...</div><div>...</div><div>...</div></div>
+                                <div class="grid grid-cols-4 gap-1 opacity-50"><div>...</div><div>...</div><div>...</div><div>...</div></div>
+                            </div>
+                            
+                            <div class="mt-4 text-center">
+                                <p class="text-red-400/80 text-sm font-semibold flex justify-center items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    Dificultat: Interpretar les dades en brut
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CAS B: Mètode InnovaFP (IA Analista) -->
+                    <div class="relative transform md:scale-105 z-10">
+                         <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
+                            <span class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg shadow-purple-500/20">Assistent Financer IA</span>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-900/80 to-slate-900/90 rounded-xl border border-purple-500/50 p-6 shadow-[0_0_40px_-10px_rgba(168,85,247,0.2)] backdrop-blur-sm">
+                            
+                            <!-- Xat UI -->
+                            <div class="space-y-4 font-sans text-sm">
+                                <!-- User -->
+                                <div class="flex items-start gap-3 justify-end">
+                                    <div class="bg-purple-600 rounded-2xl rounded-tr-none p-3 text-white shadow-lg text-xs sm:text-sm">
+                                        <div class="flex items-center gap-2 mb-1 opacity-80 border-b border-purple-400/30 pb-1">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path></svg>
+                                            <span>adjunt: balanç_mensual.csv</span>
+                                        </div>
+                                        Genera un resum executiu i calcula els 3 KPIs més rellevants.
+                                    </div>
+                                    <div class="w-8 h-8 rounded-full bg-purple-500 flex-shrink-0 flex items-center justify-center text-white text-xs">📊</div>
+                                </div>
+
+                                <!-- Bot -->
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-cyan-600 flex-shrink-0 flex items-center justify-center text-white text-xs">🤖</div>
+                                    <div class="bg-slate-800 rounded-2xl rounded-tl-none p-4 text-slate-200 border border-slate-700 w-full shadow-inner">
+                                        <div class="mb-3">
+                                            <h4 class="text-white font-bold text-sm mb-1">Resum Executiu</h4>
+                                            <p class="text-xs text-slate-400 leading-relaxed">
+                                                L'empresa mostra una tendència positiva amb un increment de vendes del <span class="text-green-400">12%</span> respecte al mes anterior. Les despeses operatives s'han contingut.
+                                            </p>
+                                        </div>
+                                        
+                                        <!-- KPIs Visuals -->
+                                        <div class="grid grid-cols-3 gap-2 mt-2">
+                                            <div class="bg-slate-900/80 rounded p-2 text-center border border-slate-700">
+                                                <div class="text-[10px] text-slate-500 uppercase">Marge Brut</div>
+                                                <div class="text-lg font-bold text-green-400">25.4%</div>
+                                            </div>
+                                            <div class="bg-slate-900/80 rounded p-2 text-center border border-slate-700">
+                                                <div class="text-[10px] text-slate-500 uppercase">EBITDA</div>
+                                                <div class="text-lg font-bold text-cyan-400">+10%</div>
+                                            </div>
+                                            <div class="bg-slate-900/80 rounded p-2 text-center border border-slate-700">
+                                                <div class="text-[10px] text-slate-500 uppercase">Liquiditat</div>
+                                                <div class="text-lg font-bold text-purple-400">1.5</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 text-center">
+                                <p class="text-purple-300 text-sm font-semibold flex justify-center items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                    Valor: Convertir dades en "Insights" de negoci
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- BANNER INFERIOR: DINAMITZACIÓ EMPRESES -->
+        <div class="relative z-10 bg-indigo-900/30 border-t border-indigo-500/30 p-8 sm:p-10 text-center">
+            <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6">
+                <div class="flex-shrink-0 p-4 bg-indigo-500/20 rounded-full border border-indigo-400/40 shadow-[0_0_15px_rgba(99,102,241,0.3)]">
+                    <svg class="w-10 h-10 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                </div>
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-white mb-1">Dinamització amb Empreses Locals</h3>
+                    <p class="text-indigo-200 text-lg leading-relaxed">
+                        Un objectiu clau és establir contacte amb el teixit empresarial per transferir coneixement i auditar serveis d'IA corporatius.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PEU: Objectiu Final -->
+        <div class="relative z-10 bg-slate-900/50 p-8 border-t border-slate-700 text-center">
+            <h4 class="text-lg font-semibold text-slate-300 mb-2">Objectiu Tecnològic</h4>
+            <div class="flex flex-wrap justify-center gap-4 text-sm font-mono text-cyan-400">
+                <span class="bg-slate-800 px-3 py-1 rounded border border-slate-700">#OpenSourceAI</span>
+                <span class="bg-slate-800 px-3 py-1 rounded border border-slate-700">#LocalInference</span>
+                <span class="bg-slate-800 px-3 py-1 rounded border border-slate-700">#DataPrivacy</span>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

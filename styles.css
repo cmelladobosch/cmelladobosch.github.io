@@ -54,7 +54,8 @@ body.dark {
     padding: 0;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -65,6 +66,23 @@ body {
     -webkit-font-smoothing: antialiased;
     line-height: 1.6;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Enllaços en general i integrats als paràgrafs */
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+p a {
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+}
+
+p a:hover {
+    color: var(--accent-hover);
+    border-bottom-color: var(--accent-hover);
 }
 
 .wrap {
@@ -145,8 +163,13 @@ body {
     background: var(--border);
 }
 
-[data-theme="dark"] .moon-icon { display: none; }
-[data-theme="light"] .sun-icon { display: none; }
+[data-theme="dark"] .moon-icon {
+    display: none;
+}
+
+[data-theme="light"] .sun-icon {
+    display: none;
+}
 
 /* Typography Globals */
 .section-title {
@@ -296,10 +319,12 @@ section {
 .timeline::-webkit-scrollbar {
     height: 8px;
 }
+
 .timeline::-webkit-scrollbar-track {
     background: var(--border);
     border-radius: 8px;
 }
+
 .timeline::-webkit-scrollbar-thumb {
     background: var(--muted);
     border-radius: 8px;
@@ -346,17 +371,20 @@ section {
 #about-text {
     min-height: 3em;
 }
+
 .bin-char {
     color: var(--accent);
     display: inline-block;
     min-width: 0.6ch;
     font-family: monospace;
 }
+
 .bin-char.revealed {
     color: var(--muted);
     font-family: inherit;
     font-weight: 400;
 }
+
 .bin-char.space {
     width: 0.4rem;
     display: inline-block;
@@ -368,12 +396,30 @@ section {
         flex-direction: column;
         align-items: flex-start;
     }
-    .subtitle { display: none; }
-    .main-nav { width: 100%; margin-top: 12px; }
-    .main-nav ul { flex-wrap: wrap; justify-content: space-between; width: 100%; }
-    .hero-content h2 { font-size: 2rem; }
+
+    .subtitle {
+        display: none;
+    }
+
+    .main-nav {
+        width: 100%;
+        margin-top: 12px;
+    }
+
+    .main-nav ul {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .hero-content h2 {
+        font-size: 2rem;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    * { transition-duration: 0s !important; animation-duration: 0s !important; }
+    * {
+        transition-duration: 0s !important;
+        animation-duration: 0s !important;
+    }
 }
