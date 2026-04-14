@@ -1,0 +1,1071 @@
+
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Com funciona un Transformer? | Animació Pedagògica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <!-- Transformers.js es carrega via import dins del tag script inferior -->
+    <style>
+        :root {
+            --bg-dark: #090c10;
+            --bg-card: #161b22;
+            --border-color: #30363d;
+            --accent-blue: #58a6ff;
+            --accent-green: #2ea043;
+            --accent-purple: #ab7df8;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --glow-blue: 0 0 15px rgba(88, 166, 255, 0.3);
+            --glow-green: 0 0 15px rgba(46, 160, 67, 0.3);
+            --gradient-blue: linear-gradient(135deg, #58a6ff, #ab7df8);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow: hidden;
+            /* Evitem el scroll global */
+            height: 100vh;
+        }
+
+        .app-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 15px 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-bottom {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .title-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .input-config {
+            display: flex;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        #user-input {
+            flex-grow: 1;
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        #user-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-left: 2px solid var(--border-color);
+            padding-left: 20px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 12px;
+        }
+
+        .stat-box {
+            background: var(--bg-card);
+            padding: 6px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: var(--accent-blue);
+            font-weight: 800;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+        }
+
+        .step-counter {
+            font-size: 0.9rem;
+            color: var(--accent-purple);
+            font-weight: 700;
+            font-family: 'Fira Code', monospace;
+            padding: 0 10px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 340px;
+            gap: 20px;
+            flex-grow: 1;
+            min-height: 0;
+            /* Crucial per evitar que el contingut empenyi la graella */
+            overflow: hidden;
+        }
+
+        .panel-header {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            letter-spacing: 0.05em;
+            border-left: 3px solid var(--accent-blue);
+            padding-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .architecture-panel {
+            background: rgba(22, 27, 34, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        .block-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .block {
+            background: #21262d;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .block.active {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+            box-shadow: var(--glow-blue);
+            transform: scale(1.05) translateX(5px);
+            background: rgba(88, 166, 255, 0.15);
+        }
+
+        .data-stage {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .input-area {
+            background: var(--bg-card);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .text-glow {
+            color: var(--accent-green);
+            text-shadow: 0 0 8px rgba(46, 160, 67, 0.5);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .canvas-area {
+            flex-grow: 1;
+            background: #020408;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
+        }
+
+        #attention-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        #token-container {
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .token {
+            background: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(4px);
+            border: 2px solid var(--accent-blue);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            animation: tokenEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .token:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(88, 166, 255, 0.2);
+        }
+
+        @keyframes tokenEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .token::after {
+            content: attr(data-id);
+            position: absolute;
+            top: -12px;
+            left: 0;
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+        }
+
+        .prob-area {
+            height: 160px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            flex-shrink: 0;
+        }
+
+        #prob-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .prob-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+        }
+
+        .bar-container {
+            flex-grow: 1;
+            height: 8px;
+            background: #21262d;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: var(--accent-purple);
+            width: 0%;
+            transition: width 0.5s ease-out;
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-height: 0;
+            /* Crucial */
+            overflow: hidden;
+        }
+
+        .log-container {
+            flex-grow: 1;
+            background: rgba(22, 27, 34, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        #log-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            padding-right: 5px;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .log-entry.system {
+            color: var(--text-secondary);
+        }
+
+        .log-entry.info {
+            color: var(--accent-blue);
+        }
+
+        .log-entry.success {
+            color: var(--accent-green);
+        }
+
+        .log-entry.warning {
+            color: #ff7b72;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn.primary {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background: #2c974b;
+        }
+
+        .btn.secondary {
+            background: #21262d;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn.secondary:hover {
+            background: #30363d;
+        }
+
+        /* Controls (ara a la part superior) */
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: rgba(88, 166, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        .step-counter {
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-left: auto;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .pedagogical-box {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(88, 166, 255, 0.05);
+            border: 1px dashed var(--accent-blue);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .pedagogical-box strong {
+            color: var(--accent-blue);
+            display: block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .pedagogical-box ul {
+            margin-top: 10px;
+            padding-left: 15px;
+        }
+
+        .pedagogical-box li {
+            margin-bottom: 5px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loader-content {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            width: 400px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(88, 166, 255, 0.1);
+            border-top: 4px solid var(--accent-blue);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-text {
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        #loader-status {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #21262d;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--accent-blue);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <div class="loader-text">Carregant motor d'IA de DAW 2n ...</div>
+            <div class="progress-bar-container">
+                <div id="loader-progress" class="progress-bar-fill"></div>
+            </div>
+            <p id="loader-status">Connectant amb Hugging Face...</p>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <header>
+            <div class="header-top">
+                <div class="title-group">
+                    <h1>Transformers <span style="color: var(--accent-purple)">DAW Edition</span></h1>
+                    <p class="subtitle">Animació pedagògica del funcionament intern del model GPT-2</p>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-box">
+                        <span class="stat-label">Tokens Entrada:</span>
+                        <span id="stat-input" class="stat-value">3</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Generats:</span>
+                        <span id="stat-output" class="stat-value">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-bottom">
+                <div class="input-config">
+                    <input type="text" id="user-input" placeholder="Escriu una frase per analitzar..."
+                        value="El gos juga amb">
+                    <button id="btn-load" class="btn secondary">Carregar Frase</button>
+                </div>
+
+                <div class="controls">
+                    <button id="btn-next" class="btn primary">Pas a pas ➔</button>
+                    <button id="btn-reset" class="btn secondary">Reiniciar</button>
+                    <div class="step-counter">Pas <span id="current-step">0</span>/5</div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-grid">
+            <section class="architecture-panel">
+                <div class="panel-header">Arquitectura del Bloc</div>
+                <div class="block-diagram">
+                    <div id="block-input" class="block">Input Embeddings</div>
+                    <div id="block-pos" class="block">Positional Encoding</div>
+                    <div id="block-attention" class="block">Multi-Head Attention</div>
+                    <div id="block-addnorm" class="block">Add & Norm</div>
+                    <div id="block-ffn" class="block">Feed Forward</div>
+                    <div id="block-output" class="block">Output Softmax</div>
+                </div>
+
+                <div class="pedagogical-box">
+                    <strong>📌 Nota sobre la "Disgregació"</strong>
+                    L'IA no llegeix lletres ni lletres, sinó <strong>tokens</strong>. Si una paraula no està al seu
+                    diccionari:
+                    <ul id="pedagogical-examples">
+                        <li>La "trosseja" en sub-unitats.</li>
+                    </ul>
+                    <p style="margin-top:10px"><strong>Per què falla?</strong> Si escrivim en català i el model és més
+                        expert en anglès, es confon i al·lucina.</p>
+                </div>
+            </section>
+
+            <section class="data-stage">
+                <div id="input-display" class="input-area">
+                    <span class="label"
+                        style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 5px; display: block;">Seqüència
+                        de Context (el que la IA "veu"):</span>
+                    <div id="current-text" class="text-glow" style="font-size: 1.2rem; min-height: 1.5em;">El gos juga
+                        amb...</div>
+                </div>
+
+                <div id="visualization-canvas" class="canvas-area">
+                    <svg id="attention-svg"></svg>
+                    <div id="token-container"></div>
+                </div>
+
+                <div id="probability-chart" class="prob-area">
+                    <div class="panel-header">Predicció del següent Token (Softmax)</div>
+                    <div id="prob-bars"></div>
+                </div>
+            </section>
+
+            <aside class="side-panel">
+                <div class="log-container">
+                    <div class="panel-header">Consola de Processament</div>
+                    <div id="log-content">
+                        <div class="log-entry system">Sistem accessible. Prem "Pas a pas" per començar.</div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <script type="module">
+        import { AutoTokenizer, AutoModelForCausalLM, env, pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers';
+
+        // Configure transformers.js to use CDN models only
+        env.allowLocalModels = false;
+        env.useBrowserCache = true;
+
+        const state = {
+            step: 0,
+            maxSteps: 5,
+            tokens: [],
+            predictions: [],
+            attentionWeights: [],
+            tokenizer: null,
+            model: null,
+            colors: ["#58a6ff", "#2ea043", "#ab7df8", "#ff7b72", "#d29922"]
+        };
+
+        const btnNext = document.getElementById('btn-next');
+        const btnReset = document.getElementById('btn-reset');
+        const btnLoad = document.getElementById('btn-load');
+        const userInput = document.getElementById('user-input');
+        const logContent = document.getElementById('log-content');
+        const tokenContainer = document.getElementById('token-container');
+        const attentionSvg = document.getElementById('attention-svg');
+        const probBars = document.getElementById('prob-bars');
+        const probArea = document.getElementById('probability-chart');
+        const currentStepEl = document.getElementById('current-step');
+        const currentTextEl = document.getElementById('current-text');
+        const statInputEl = document.getElementById('stat-input');
+        const statOutputEl = document.getElementById('stat-output');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const loaderProgress = document.getElementById('loader-progress');
+        const loaderStatus = document.getElementById('loader-status');
+
+        const blocks = {
+            1: 'block-input',
+            2: 'block-pos',
+            3: 'block-attention',
+            4: 'block-ffn',
+            5: 'block-output'
+        };
+
+        function addLog(text, type = 'info') {
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerText = `> ${text}`;
+            logContent.appendChild(entry);
+            // Auto-scroll al final
+            logContent.scrollTop = logContent.scrollHeight;
+        }
+
+        async function initModel() {
+            //const model_id = 'Xenova/gpt2';
+            //const model_id = 'Xenova/bert-base-multilingual-cased';
+            //const model_id = 'Xenova/Qwen1.5-0.5B-Chat';
+            const model_id = 'Xenova/Qwen1.5-0.5B';
+            try {
+                addLog("Descarregant motor d'IA (GPT-2)...", "info");
+
+                // Utilitzem el pipeline, que és el mètode més compatible i robust
+                state.pipeline = await pipeline('text-generation', model_id, {
+                    progress_callback: (p) => {
+                        if (p.status === 'progress') {
+                            loaderProgress.style.width = p.progress + '%';
+                            loaderStatus.innerText = `Càrrega: ${Math.round(p.progress)}%`;
+                        }
+                    }
+                });
+
+                state.tokenizer = state.pipeline.tokenizer;
+                state.model = state.pipeline.model;
+
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => loadingOverlay.style.display = 'none', 500);
+                addLog("Motor d'IA GPT-2 a punt per a la sessió.", "success");
+                loadFrase();
+            } catch (error) {
+                loaderStatus.innerText = "Error en el motor. Si us plau, recarrega la pàgina.";
+                addLog("Error crític: El navegador ha bloquejat el motor d'IA.", "error");
+                console.error(error);
+            }
+        }
+
+        async function loadFrase() {
+            if (!state.tokenizer) return;
+            const text = userInput.value.trim();
+            if (!text) return;
+            resetApp();
+            const { input_ids } = await state.tokenizer(text);
+            const ids = input_ids.data;
+            //const tokensStrings = await Promise.all([...ids].map(id => state.tokenizer.decode([id])));
+            // Busca on generes els tokensStrings i posa això:
+            const tokensStrings = await Promise.all([...ids].map(async id => {
+                let decoded = await state.tokenizer.decode([id]);
+                // Aquesta línia elimina els caràcters especials de l'espai i el bit de control
+                return decoded.replace(/[ĠĊ]/g, '').trim() || decoded;
+            }));
+            state.tokens = tokensStrings.map((w, i) => ({
+                text: w,
+                id: ids[i].toString(),
+                color: state.colors[i % state.colors.length]
+            }));
+            statInputEl.innerText = state.tokens.length;
+            currentTextEl.innerText = text + "...";
+            addLog(`Frase tokenitzada. Detectats ${state.tokens.length} IDs de vocabulari.`, "success");
+
+            updatePedagogicalNote(text, tokensStrings);
+        }
+
+        async function updatePedagogicalNote(originalText, tokens) {
+            const examplesList = document.getElementById('pedagogical-examples');
+            const words = originalText.toLowerCase().split(/[^\wàèòíúàèòïüç]+/);
+            const splits = [];
+
+            // Busquem combinacions de tokens que formin part d'una paraula original
+            for (let i = 0; i < tokens.length - 1; i++) {
+                const combined = (tokens[i] + tokens[i + 1]).toLowerCase();
+                // Si la unió de dos tokens està dins d'una de les paraules originals
+                // però cap dels dos tokens és la paraula sencera...
+                if (words.some(w => w.includes(combined) && w !== tokens[i].toLowerCase() && w !== tokens[i + 1].toLowerCase())) {
+                    splits.push(tokens[i] + "-" + tokens[i + 1]);
+                }
+            }
+
+            if (splits.length > 0) {
+                const uniqueSplits = [...new Set(splits)].slice(0, 3);
+                examplesList.innerHTML = `<li>En el teu text, ha dividit: <strong>${uniqueSplits.join(', ')}</strong>.</li>`;
+            } else {
+                examplesList.innerHTML = `<li>Aquesta vegada totes les paraules eren al diccionari de l'IA (no n'ha trossejat cap).</li>`;
+            }
+        }
+
+        async function runInference() {
+            const text = userInput.value.trim();
+            addLog("Executant inferència real (GPT-2)...", "info");
+
+            try {
+                // Tokenitzem l'entrada (obtenim input_ids i attention_mask)
+                const modelInputs = await state.tokenizer(text);
+
+                // Fem la passada endavant (forward pass) pel model
+                const output = await state.model(modelInputs);
+
+                // Obtenim els logits (puntuacions pre-softmax) de l'últim token
+                const vocabSize = state.model.config.vocab_size;
+                const lastTokenLogits = output.logits.data.subarray(-vocabSize);
+
+                // Busquem entre els millors candidats, però filtrem els tokens de xat (com <|im_end|>)
+                const candidates = Array.from(lastTokenLogits)
+                    .map((logit, index) => ({ index, logit }))
+                    .sort((a, b) => b.logit - a.logit);
+
+                const top3Indices = [];
+                for (const c of candidates) {
+                    const decoded = await state.tokenizer.decode([c.index]);
+                    // Si el token és de control (porta <| o |>), el saltem
+                    if (decoded.includes('<|') || decoded.includes('|>')) continue;
+                    top3Indices.push(c);
+                    if (top3Indices.length >= 3) break;
+                }
+
+                // Si no n'hagués trobat cap (estrany), fem un fallback als 3 primers originals
+                if (top3Indices.length === 0) {
+                    top3Indices.push(...candidates.slice(0, 3));
+                }
+
+                // Calculem probabilitats relatives (Softmax amb el truc del màxim per estabilitat)
+                const maxLogit = Math.max(...top3Indices.map(x => x.logit));
+                const expValues = top3Indices.map(x => Math.exp(x.logit - maxLogit));
+                const sumExp = expValues.reduce((a, b) => a + b, 0);
+
+                state.predictions = await Promise.all(top3Indices.map(async (item, i) => {
+                    const word = await state.tokenizer.decode([item.index]);
+                    return {
+                        text: word.trim() || `[${word}]`,
+                        prob: Math.round((expValues[i] / sumExp) * 100)
+                    };
+                }));
+
+                // Simulació d'Atencions didàctica (ara basat en l'entrada real)
+                state.attentionWeights = state.tokens.map((_, i) => {
+                    // Simulem que es fixa més en l'últim i el primer (típic de GPT)
+                    if (i === state.tokens.length - 1) return 0.7;
+                    if (i === 0) return 0.3;
+                    return 0.1 + (Math.random() * 0.15);
+                });
+
+                const winner = state.predictions[0];
+                const cleanWord = winner.text;
+
+                // Lògica de detecció d'al·lucinació (Confiança Baixa < 50%)
+                if (winner.prob < 50) {
+                    addLog(`ALERTA: Confiança baixa (${winner.prob}%). Risc d'al·lucinació elevat!`, "warning");
+                } else {
+                    addLog(`L'IA ha predit: "${cleanWord}"`, "success");
+                }
+
+            } catch (err) {
+                console.warn("L'IA ha fallat:", err.message);
+                addLog("Error en la inferència: " + err.message, "system");
+
+                state.attentionWeights = state.tokens.map(() => 0.2 + (Math.random() * 0.4));
+                state.predictions = [
+                    { text: "error", prob: 100 },
+                    { text: "?", prob: 0 },
+                    { text: "?", prob: 0 }
+                ];
+            }
+        }
+
+        function updateArchitecture(step) {
+            document.querySelectorAll('.block').forEach(b => b.classList.remove('active'));
+            const blockId = blocks[step];
+            if (blockId) {
+                document.getElementById(blockId).classList.add('active');
+            }
+        }
+
+        function clearStage() {
+            tokenContainer.innerHTML = '';
+            attentionSvg.innerHTML = '';
+            probBars.innerHTML = '';
+        }
+
+        async function stepForward() {
+            // Si el botó s'ha convertit en "Reiniciar loop", vol dir que volem continuar generant
+            if (state.step >= state.maxSteps) {
+                const newFullText = currentTextEl.innerText.replace("...", "").trim();
+                userInput.value = newFullText;
+                await loadFrase();
+                return;
+            }
+
+            // Si el model encara no està carregat, no avancis
+            if (state.step === 2 && !state.model) {
+                addLog("Error: El model no s'ha carregat correctament.", "error");
+                return;
+            }
+
+            state.step++;
+            currentStepEl.innerText = state.step;
+            updateArchitecture(state.step);
+
+            try {
+                switch (state.step) {
+                    case 1:
+                        addLog("INPUT EMBEDDINGS: Convertint cada ID en un vector dens (coordenades a l'espai semàntic).", "info");
+                        renderTokens();
+                        break;
+                    case 2:
+                        addLog("POSITIONAL ENCODING: Afegint informació d'ordre. L'IA sap on està cada paraula dins l'oració.", "info");
+                        highlightTokens();
+                        break;
+                    case 3:
+                        addLog("MULTI-HEAD ATTENTION: Les paraules 'es miren' entre elles per entendre el context.", "info");
+                        await runInference();
+                        drawAttention();
+                        break;
+                    case 4:
+                        addLog("FEED FORWARD (MLP): Processant cada paraula independentment per refinar la seva representació interna.", "info");
+                        if (state.predictions.length > 0) {
+                            renderProbabilities();
+                        } else {
+                            addLog("Error en la predicció. Reintenta-ho.", "error");
+                            state.step--; 
+                        }
+                        break;
+                    case 5:
+                        addLog("OUTPUT SOFTMAX: Triant la paraula més probable basant-se en tota l'anàlisi anterior.", "info");
+                        if (state.predictions.length > 0) {
+                            const winner = state.predictions[0].text;
+                            addLog(`Generació completada: "${winner}"`, "success");
+
+                            // Preparem el canvi visual
+                            const oldText = currentTextEl.innerText.replace("...", "");
+                            currentTextEl.innerHTML = `${oldText}<span style="color: var(--accent-purple); font-weight: 800; animation: fadeIn 0.5s ease-out"> ${winner}</span><span style="opacity: 0.5"> ...</span>`;
+
+                            btnNext.innerText = "Reiniciar loop";
+                            statOutputEl.innerText = parseInt(statOutputEl.innerText) + 1;
+
+                            addLog("La paraula generada s'ha afegit al context. Pots reiniciar per generar-ne una altra.", "system");
+                        }
+                        break;
+                }
+            } catch (err) {
+                console.error("Error en el flux de l'animació:", err);
+                addLog("Hi ha hagut un error en el procés de l'IA.", "error");
+                state.step--;
+            }
+        }
+
+        function renderTokens() {
+            state.tokens.forEach((t, i) => {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.className = 'token';
+                    el.innerText = t.text;
+                    el.setAttribute('data-id', t.id);
+                    el.style.borderColor = t.color;
+                    tokenContainer.appendChild(el);
+                }, i * 150);
+            });
+        }
+
+        function highlightTokens() {
+            document.querySelectorAll('.token').forEach(t => {
+                t.style.boxShadow = "0 0 15px " + t.style.borderColor;
+            });
+        }
+
+        function drawAttention() {
+            const tokensEls = document.querySelectorAll('.token');
+            const canvas = attentionSvg.getBoundingClientRect();
+            const lastIdx = tokensEls.length - 1;
+            const lastToken = tokensEls[lastIdx].getBoundingClientRect();
+            const xEnd = lastToken.left + lastToken.width / 2 - canvas.left;
+            const yEnd = lastToken.top - canvas.top;
+            for (let i = 0; i < lastIdx; i++) {
+                const weight = state.attentionWeights[i] || 0.1;
+                const tStart = tokensEls[i].getBoundingClientRect();
+                const xStart = tStart.left + tStart.width / 2 - canvas.left;
+                const yStart = tStart.top - canvas.top;
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                const d = `M ${xEnd} ${yEnd} Q ${(xStart + xEnd) / 2} ${yEnd - 80} ${xStart} ${yStart}`;
+                line.setAttribute("d", d);
+                line.setAttribute("stroke", state.tokens[i].color);
+                line.setAttribute("stroke-width", weight * 15 + 1);
+                line.setAttribute("fill", "none");
+                line.setAttribute("opacity", weight * 2 + 0.2);
+                line.setAttribute("stroke-dasharray", "1000");
+                line.setAttribute("stroke-dashoffset", "1000");
+                attentionSvg.appendChild(line);
+                setTimeout(() => {
+                    line.style.transition = "stroke-dashoffset 0.8s ease-out";
+                    line.style.strokeDashoffset = "0";
+                }, i * 100);
+            }
+        }
+
+        function renderProbabilities() {
+            state.predictions.forEach((p, i) => {
+                const row = document.createElement('div');
+                row.className = 'prob-row';
+                row.innerHTML = `
+                    <span style="width: 100px; font-weight: 600; white-space: nowrap; overflow: hidden">${p.text}</span>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="width: 0%; background: ${i === 0 ? '#2ea043' : '#ab7df8'}"></div>
+                    </div>
+                    <span style="width: 40px">${p.prob}%</span>
+                `;
+                probBars.appendChild(row);
+                setTimeout(() => row.querySelector('.bar-fill').style.width = p.prob + "%", i * 100);
+            });
+        }
+
+        function resetApp() {
+            state.step = 0;
+            currentStepEl.innerText = "0";
+            btnNext.innerText = "Pas a pas ➔";
+            currentTextEl.innerText = userInput.value + "...";
+            clearStage();
+            updateArchitecture(0);
+            logContent.innerHTML = '';
+        }
+
+        initModel();
+
+        btnNext.addEventListener('click', stepForward);
+        btnReset.addEventListener('click', () => {
+            statOutputEl.innerText = "0";
+            resetApp();
+        });
+        btnLoad.addEventListener('click', loadFrase);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loadFrase();
+        });
+    </script>
+</body>
+
+</html>

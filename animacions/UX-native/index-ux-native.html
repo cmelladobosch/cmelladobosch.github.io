@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symfony UX Native | Similitud de Disseny</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+          /* Portfolio Palette */
+          --bg-dark: #090c10;
+          --bg-card: rgba(13, 17, 23, 0.4);
+          --border-color: #30363d;
+          --accent-blue: #58a6ff;
+          --accent-green: #2ea043;
+          --accent-purple: #ab7df8;
+          --text-primary: #c9d1d9;
+          --text-secondary: #8b949e;
+          --glow-blue: 0 0 15px rgba(88, 166, 255, 0.3);
+          --gradient-blue: linear-gradient(135deg, #58a6ff, #ab7df8);
+          --gradient-green: linear-gradient(135deg, #2ea043, #58a6ff);
+          
+          --vsc-bg: #1e1e1e;
+          --vsc-sidebar: #333333;
+          --vsc-tabs-bg: #252526;
+          --vsc-status: #007acc;
+          --vsc-gutter-text: #858585;
+          
+          --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+          --radius: 12px;
+          --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+          --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: var(--font-sans);
+          background-color: var(--bg-dark);
+          color: var(--text-primary);
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        /* Header */
+        header.app-header {
+          padding: 0.8rem 1.5rem;
+          border-bottom: 1px solid var(--border-color);
+          background: rgba(255, 255, 255, 0.02);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .title-group h1 {
+          font-size: 1.3rem;
+          font-weight: 800;
+          background: var(--gradient-blue);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+          font-size: 0.75rem;
+          color: var(--text-secondary);
+        }
+
+        .controls {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+        }
+
+        .mode-toggle {
+          background: #161b22;
+          padding: 4px;
+          border-radius: 100px;
+          display: flex;
+          border: 1px solid var(--border-color);
+        }
+
+        .mode-toggle span {
+          padding: 6px 14px;
+          border-radius: 100px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          color: var(--text-secondary);
+        }
+
+        .mode-toggle .active {
+          background: var(--accent-blue);
+          color: #0d1117;
+        }
+
+        #reset-btn {
+          transition: all 0.2s;
+        }
+
+        #reset-btn:hover {
+          background: rgba(255,255,255,0.2) !important;
+          color: white;
+        }
+
+        /* Main Layout */
+        main {
+          flex: 1;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          overflow: hidden;
+        }
+
+        /* VS Code Container */
+        .vsc-container {
+          display: grid;
+          grid-template-columns: 48px 1fr;
+          background: var(--vsc-bg);
+          height: 100%;
+          border-right: 1px solid var(--border-color);
+          position: relative;
+        }
+
+        .vsc-activity-bar {
+          background: var(--vsc-sidebar);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding-top: 10px;
+          gap: 20px;
+        }
+
+        .vsc-icon {
+          color: rgba(255, 255, 255, 0.4);
+          cursor: pointer;
+          transition: color 0.2s;
+        }
+
+        .vsc-icon:hover, .vsc-icon.active {
+          color: white;
+        }
+
+        .vsc-editor-main {
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        .vsc-tabs {
+          height: 35px;
+          background: rgba(37, 37, 38, 0.4);
+          backdrop-filter: blur(4px);
+          display: flex;
+          border-bottom: 1px solid #1a1a1a;
+          overflow-x: auto;
+        }
+
+        .vsc-tabs::-webkit-scrollbar { height: 0; }
+
+        .vsc-tab {
+          background: #2d2d2d;
+          padding: 0 15px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 13px;
+          color: var(--text-secondary);
+          border-right: 1px solid #1e1e1e;
+          cursor: pointer;
+          position: relative;
+          min-width: 140px;
+        }
+
+        .vsc-tab.active {
+          color: white;
+          background: var(--vsc-bg);
+        }
+
+        .vsc-tab.active::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: var(--accent-blue);
+        }
+
+        .vsc-tab:hover:not(.active) {
+          background: #333333;
+        }
+
+        /* Workspace & Gutter */
+        .vsc-workspace {
+          flex: 1;
+          display: flex;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .vsc-gutter {
+          width: 45px;
+          background: var(--vsc-bg);
+          color: var(--vsc-gutter-text);
+          padding: 1.5rem 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          padding-right: 10px;
+          font-family: var(--font-mono);
+          font-size: 14px;
+          line-height: 1.6;
+          user-select: none;
+          overflow: hidden;
+        }
+
+        #twig-editor {
+          flex: 1;
+          background: transparent;
+          color: #d4d4d4;
+          border: none;
+          padding: 1.5rem 1rem;
+          font-family: var(--font-mono);
+          font-size: 14px;
+          line-height: 1.6;
+          resize: none;
+          outline: none;
+          overflow: auto;
+          white-space: pre;
+        }
+
+        /* Status Bar */
+        .vsc-status-bar {
+          height: 22px;
+          background: var(--vsc-status);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 8px;
+          color: white;
+          font-size: 11px;
+        }
+
+        .status-left, .status-right { display: flex; align-items: center; gap: 10px; }
+        .status-item { cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 0 4px; }
+        .status-item:hover { background: rgba(255, 255, 255, 0.1); }
+
+        /* Dynamic Info Carousel */
+        .info-carousel {
+          margin-top: 30px;
+          width: 550px;
+          height: 160px; /* Fixed height to prevent jumps */
+          position: relative;
+          display: flex;
+          justify-content: center;
+        }
+
+        .carousel-card {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.6s ease-in-out;
+          transform: translateY(10px);
+        }
+
+        .carousel-card.active {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+
+        /* Explanatory Box */
+        .project-info {
+          background: rgba(13, 17, 23, 0.4);
+          backdrop-filter: blur(12px);
+          border: 1px dashed var(--accent-blue);
+          border-radius: 8px;
+          padding: 20px;
+        }
+
+        .project-info h4 { font-size: 0.75rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+        .project-info p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+
+        /* Install It Terminal Box */
+        .install-it {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .install-it h3 {
+          font-size: 1.8rem;
+          font-weight: 800;
+          color: white;
+          letter-spacing: -0.02em;
+        }
+
+        .terminal-window {
+            width: 100%;
+            background: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .terminal-header {
+          height: 28px;
+          background: #21262d;
+          display: flex;
+          align-items: center;
+          padding: 0 12px;
+          gap: 6px;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; }
+        .dot.orange { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        .terminal-body {
+          padding: 18px 20px;
+          font-family: var(--font-mono);
+          font-size: 0.95rem;
+          color: #fff;
+        }
+
+        .terminal-body .prompt { color: var(--accent-blue); font-weight: bold; }
+
+        /* Mobile Preview Section */
+        .preview-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: #020408;
+          position: relative;
+          overflow: hidden;
+          box-shadow: inset 0 0 60px rgba(0,0,0,0.8);
+        }
+
+        .phone-frame {
+          width: 320px;
+          height: 640px;
+          background: #000;
+          border-radius: 40px;
+          border: 12px solid #111827;
+          outline: 1px solid #374151;
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 25px 80px -12px rgba(0, 0, 0, 0.7);
+          transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .phone-frame:hover {
+            transform: scale(1.02) rotate(1deg);
+        }
+
+        .blink-play {
+            color: var(--accent-green) !important;
+            filter: drop-shadow(0 0 8px var(--accent-green));
+        }
+
+        .phone-screen {
+          flex: 1;
+          background: #f2f2f7;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          color: #1e293b;
+        }
+
+        .status-bar {
+          height: 38px;
+          padding: 0 22px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 11px;
+          font-weight: 700;
+          background: white;
+        }
+
+        .web-navbar { background: white; padding: 10px 16px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
+        .native-navbar { height: 44px; background: white; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; position: relative; padding: 0 16px; }
+        .native-navbar h2 { font-size: 16px; font-weight: 600; }
+        .native-navbar .nav-action { position: absolute; right: 16px; color: #007aff; font-size: 14px; font-weight: 600; text-decoration: none; }
+
+        .content-area { padding: 16px; flex: 1; }
+
+        .render-overlay {
+            position: absolute;
+            top: 44px; /* Below navbar */
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .overlay-card {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 80%;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .overlay-card i { color: var(--accent-green); margin-bottom: 12px; display: block; margin-left: auto; margin-right: auto; }
+        .overlay-card p { font-weight: 700; color: #1e293b; margin-bottom: 4px; font-size: 16px; }
+        .overlay-card span { font-size: 12px; color: #64748b; }
+
+        .hidden { display: none !important; }
+
+        @keyframes bounceIn {
+          from { opacity: 0; transform: scale(0.8); }
+          to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <div class="title-group">
+            <h1>Symfony UX <span style="color: var(--accent-purple)">Native Bridge</span></h1>
+            <p class="subtitle">Simulació pedagògica del pont entre Twig i App Nativa</p>
+        </div>
+        
+        <div class="controls">
+            <!-- Controls moved to respective areas -->
+        </div>
+    </header>
+
+    <main>
+        <!-- VS CODE STYLE EDITOR -->
+        <div class="vsc-container">
+            <!-- Sidebar -->
+            <aside class="vsc-activity-bar">
+                <div class="vsc-icon active"><i data-lucide="files" size="24"></i></div>
+                <div class="vsc-icon"><i data-lucide="search" size="24"></i></div>
+                <div class="vsc-icon"><i data-lucide="git-branch" size="24"></i></div>
+                <div id="play-btn-ide" class="vsc-icon"><i data-lucide="play-circle" size="24"></i></div>
+                <div class="vsc-icon" style="margin-top: auto;"><i data-lucide="user-circle" size="24"></i></div>
+                <div class="vsc-icon"><i data-lucide="settings" size="24"></i></div>
+            </aside>
+
+            <!-- Editor Main Area -->
+            <div class="vsc-editor-main">
+                <!-- Tabs -->
+                <div id="vsc-tabs" class="vsc-tabs">
+                    <div class="vsc-tab active" data-file="welcome">
+                        <i data-lucide="file-code" size="14" style="color: #e34c26;"></i>
+                        <span>welcome.twig</span>
+                    </div>
+                    <div class="vsc-tab" data-file="navigation">
+                        <i data-lucide="file-code" size="14" style="color: #e34c26;"></i>
+                        <span>nav.twig</span>
+                    </div>
+                    <div class="vsc-tab" data-file="lists">
+                        <i data-lucide="file-code" size="14" style="color: #e34c26;"></i>
+                        <span>lists.twig</span>
+                    </div>
+                    <div class="vsc-tab" data-file="actions">
+                        <i data-lucide="file-code" size="14" style="color: #e34c26;"></i>
+                        <span>actions.twig</span>
+                    </div>
+                </div>
+
+                <!-- Editor Workspace -->
+                <div class="vsc-workspace">
+                    <div id="vsc-gutter" class="vsc-gutter"></div>
+                    <textarea id="twig-editor" spellcheck="false" wrap="off"></textarea>
+                </div>
+
+                <!-- Status Bar -->
+                <div class="vsc-status-bar">
+                    <div class="status-left">
+                        <div class="status-item main"><i data-lucide="git-branch" size="12"></i> main*</div>
+                        <div class="status-item"><i data-lucide="refresh-cw" size="12"></i></div>
+                        <div class="status-item" id="reset-btn" style="margin-left: 10px; background: rgba(255,255,255,0.1); padding: 0 8px; border-radius: 3px;">
+                            <i data-lucide="rotate-ccw" size="10"></i> Reset Project
+                        </div>
+                    </div>
+                    <div class="status-right">
+                        <div id="cursor-pos" class="status-item">Ln 1, Col 1</div>
+                        <div class="status-item">Spaces: 4</div>
+                        <div class="status-item">UTF-8</div>
+                        <div class="status-item">Symfony Twig</div>
+                        <div class="status-item"><i data-bell="bell" size="12"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE PREVIEW -->
+        <div class="preview-container">
+            <div class="mode-toggle" style="margin-bottom: 30px;">
+                <span id="web-mode-btn-new">Web View</span>
+                <span id="native-mode-btn-new" class="active">Native App</span>
+            </div>
+
+            <div id="device-frame" class="phone-frame">
+                <div class="status-bar">
+                    <span id="current-time">10:48</span>
+                    <div style="display:flex; gap:6px;">
+                        <i data-lucide="signal" size="12"></i>
+                        <i data-lucide="wifi" size="12"></i>
+                        <i data-lucide="battery-full" size="12"></i>
+                    </div>
+                </div>
+
+                <div class="phone-screen native-look">
+                    <nav id="preview-web-nav" class="web-navbar">
+                        <div style="font-weight: 700; color: #1a202c; font-size: 14px;">Symfony UX</div>
+                        <i data-lucide="menu" size="18"></i>
+                    </nav>
+
+                    <header id="preview-native-header" class="native-navbar">
+                        <h2 id="native-title">Inici</h2>
+                        <a href="#" id="native-action" class="nav-action"></a>
+                    </header>
+
+                    <div id="rendered-content" class="content-area"></div>
+
+                    <!-- Manual Render Overlay -->
+                    <div id="render-overlay" class="render-overlay hidden">
+                        <div class="overlay-card">
+                            <i data-lucide="play-circle" size="32"></i>
+                            <p>Canvis detectats</p>
+                            <span>Prem PLAY a l'IDE per visualitzar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Info Carousel -->
+            <div class="info-carousel">
+                <div id="card-project" class="carousel-card active">
+                    <div class="project-info">
+                        <h4>📌 Objectiu del Projecte</h4>
+                        <p>Disposem d'interfícies Twig que originalment es visualitzen mitjançant <strong>@media queries</strong> mòbils estàndard. L'objectiu d'aquesta simulació és adaptar-les a la vista <strong>UX-native</strong> per aprofitar components i navegació nativa real del dispositiu.</p>
+                    </div>
+                </div>
+
+                <div id="card-install" class="carousel-card">
+                    <div class="install-it">
+                        <h3>Instal·la-ho</h3>
+                        <div class="terminal-window">
+                            <div class="terminal-header">
+                                <span class="dot red"></span>
+                                <span class="dot orange"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="terminal-body">
+                                <span class="prompt">$</span> composer require symfony/ux-native
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 15px; color: var(--text-secondary); font-size: 0.75rem; font-style: italic;">
+                * Qualsevol canvi al codi dispara un "blink" al dispositiu indicant el renderitzat.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // Inline app.js logic
+        const editor = document.getElementById('twig-editor');
+        const resetBtn = document.getElementById('reset-btn');
+        const webModeBtn = document.getElementById('web-mode-btn-new');
+        const nativeModeBtn = document.getElementById('native-mode-btn-new');
+        const renderedContent = document.getElementById('rendered-content');
+        const webNav = document.getElementById('preview-web-nav');
+        const nativeHeader = document.getElementById('preview-native-header');
+        const nativeTitle = document.getElementById('native-title');
+        const nativeAction = document.getElementById('native-action');
+        const gutter = document.getElementById('vsc-gutter');
+        const deviceFrame = document.getElementById('device-frame');
+        const playBtnIde = document.getElementById('play-btn-ide');
+        const renderOverlay = document.getElementById('render-overlay');
+        const tabs = document.querySelectorAll('.vsc-tab');
+        const cursorPosEl = document.getElementById('cursor-pos');
+
+        // Carousel Elements
+        const cardProject = document.getElementById('card-project');
+        const cardInstall = document.getElementById('card-install');
+
+        let isNativeMode = true;
+        let currentFile = 'welcome';
+
+        const TEMPLATES = {
+            welcome: `{# welcome.twig #}
+<div class="welcome-section">
+    <h1>Benvingut a la App!</h1>
+    <p>Simulació de UX-Native Bridge.</p>
+</div>
+
+{% if ux_is_native() %}
+    <div class="list-group">
+        <div class="list-item">
+            <div class="icon"><i data-lucide="bell"></i></div>
+            <div class="text"><h3>Notificacions</h3><p>Mode natiu activat.</p></div>
+        </div>
+    </div>
+    <a href="/profile" class="btn-native" data-bridge-title="El Meu Perfil">Veure Perfil</a>
+{% else %}
+    <div class="web-only-notice">
+        <p>Vista Web (Media Query mòbil).</p>
+        <button class="btn-web">Instal·la l'App</button>
+    </div>
+{% endif %}
+
+<style>
+    .welcome-section { margin-bottom: 2rem; }
+    .welcome-section h1 { font-size: 20px; color: #1e293b; margin-bottom: 8px; }
+    .welcome-section p { font-size: 14px; color: #64748b; }
+    .web-only-notice { padding: 20px; background: #fef3c7; border-radius: 8px; border: 1px solid #f59e0b; }
+    .btn-web { width: 100%; padding: 12px; background: #1a202c; color: white; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; }
+    .btn-native { display: block; width: 100%; padding: 14px; background: #1a5cc8; color: white; text-align: center; border-radius: 10px; text-decoration: none; font-weight: 600; margin-top: 20px; }
+</style>`,
+
+            navigation: `{# nav.twig #}
+<div class="card">
+    <h2>Navegació Dinàmica</h2>
+    <p>Utilitza data-bridge-title per al títol natiu.</p>
+</div>
+
+{% if ux_is_native() %}
+    <div class="list-group">
+        <a href="/dashboard" class="list-item" style="text-decoration:none; color:inherit;" data-bridge-title="Dashboard">
+            <div class="icon"><i data-lucide="layout-dashboard"></i></div>
+            <div class="text"><h3>Tab: Dashboard</h3><p>Canvia el títol natiu</p></div>
+        </a>
+        <a href="/settings" class="list-item" style="text-decoration:none; color:inherit;" data-bridge-title="Ajustos">
+            <div class="icon"><i data-lucide="settings-2"></i></div>
+            <div class="text"><h3>Tab: Configuració</h3><p>Actualitza el títol</p></div>
+        </a>
+    </div>
+{% endif %}`,
+
+            lists: `{# lists.twig #}
+<p style="margin-bottom:12px; font-weight:600; color:#64748b; font-size:12px; text-transform:uppercase;">DADES DEL DISPOSITIU</p>
+
+<div class="list-group">
+    <div class="list-item">
+        <div class="icon" style="background:#e0f2fe; color:#0ea5e9;"><i data-lucide="cloud"></i></div>
+        <div class="text"><h3>Sincronització</h3><p>Activa ara mateix</p></div>
+        <i data-lucide="chevron-right" style="margin-left:auto; color:#cbd5e1;"></i>
+    </div>
+    {% if ux_is_native() %}
+    <div class="list-item">
+        <div class="icon" style="background:#f0fdf4; color:#22c55e;"><i data-lucide="fingerprint"></i></div>
+        <div class="text"><h3>Biometria</h3><p>Face ID detectat</p></div>
+        <div style="margin-left:auto; width:40px; height:24px; background:#22c55e; border-radius:20px; position:relative;">
+            <div style="width:20px; height:20px; background:white; border-radius:50%; position:absolute; right:2px; top:2px;"></div>
+        </div>
+    </div>
+    {% endif %}
+</div>`,
+
+            actions: `{# actions.twig #}
+<div style="text-align:center; padding:20px;">
+    <i data-lucide="sparkles" size="48" style="color:#f59e0b; margin-bottom:12px;"></i>
+    <h2>Botons de la Barra</h2>
+    <p>data-bridge-action afegeix botons al header.</p>
+</div>
+
+{% if ux_is_native() %}
+    <div class="native-bridge-demo" 
+         data-bridge-title="Nova Nota" 
+         data-bridge-action="Desar">
+         <textarea style="width:100%; height:120px; border:none; padding:12px; border-radius:8px; background:#fff; margin-top:12px;" placeholder="Escriu aquí..."></textarea>
+    </div>
+{% endif %}`
+        };
+
+        // INITIAL LOAD
+        loadTemplate('welcome');
+
+        function loadTemplate(file) {
+            currentFile = file;
+            editor.value = TEMPLATES[file];
+            updateGutter();
+            showOverlay(); // Don't render immediately
+        }
+
+        // TAB HANDLING
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                loadTemplate(tab.dataset.file);
+            });
+        });
+
+        // LINE NUMBERS
+        function updateGutter() {
+            const lines = editor.value.split('\n').length;
+            gutter.innerHTML = Array.from({length: lines}, (_, i) => `<div>${i+1}</div>`).join('');
+        }
+
+        // SYNC SCROLL
+        editor.addEventListener('scroll', () => {
+            gutter.scrollTop = editor.scrollTop;
+        });
+
+        // CURSOR POS
+        editor.addEventListener('keyup', updateCursorPos);
+        editor.addEventListener('click', updateCursorPos);
+        function updateCursorPos() {
+            const textBefore = editor.value.substring(0, editor.selectionStart);
+            const lines = textBefore.split('\n');
+            cursorPosEl.textContent = `Ln ${lines.length}, Col ${lines[lines.length-1].length + 1}`;
+        }
+
+        // VIEW MODES
+        webModeBtn.addEventListener('click', () => {
+            isNativeMode = false;
+            webModeBtn.classList.add('active');
+            nativeModeBtn.classList.remove('active');
+            render();
+        });
+
+        nativeModeBtn.addEventListener('click', () => {
+            isNativeMode = true;
+            nativeModeBtn.classList.add('active');
+            webModeBtn.classList.remove('active');
+            render();
+        });
+
+        resetBtn.addEventListener('click', () => loadTemplate(currentFile));
+
+        // MANUAL RENDER TRIGGERS
+        editor.addEventListener('input', () => {
+            updateGutter();
+            showOverlay();
+        });
+
+        playBtnIde.addEventListener('click', () => {
+            render();
+            hideOverlay();
+        });
+
+        function showOverlay() {
+            renderOverlay.classList.remove('hidden');
+        }
+
+        function hideOverlay() {
+            renderOverlay.classList.add('hidden');
+        }
+
+        // INFO CAROUSEL LOGIC
+        setInterval(() => {
+            const isProjectActive = cardProject.classList.contains('active');
+            if (isProjectActive) {
+                cardProject.classList.remove('active');
+                cardInstall.classList.add('active');
+            } else {
+                cardInstall.classList.remove('active');
+                cardProject.classList.add('active');
+            }
+        }, 5000);
+
+        // MAIN RENDERER
+        function render(isForced = false) {
+            let rawTwig = editor.value;
+            
+            // Toggle Navbars
+            if (isNativeMode) {
+                webNav.classList.add('hidden');
+                nativeHeader.classList.remove('hidden');
+            } else {
+                webNav.classList.remove('hidden');
+                nativeHeader.classList.add('hidden');
+            }
+
+            // Parse (more robust regex)
+            let processedHtml = rawTwig;
+            const ifRegex = /\{%\s*if\s+ux_is_native\(\)\s*%\}([\s\S]*?)(?:\{%\s*else\s*%\}([\s\S]*?))?\{%\s*endif\s*%\}/gi;
+            processedHtml = processedHtml.replace(ifRegex, (m, ifP, elseP) => isNativeMode ? ifP : (elseP || ''));
+            processedHtml = processedHtml.replace(/\{#[\s\S]*?#\}/g, '');
+
+            // Bridge Metadata
+            if (isNativeMode) {
+                const titleMatch = processedHtml.match(/data-bridge-title="([^"]+)"/i);
+                nativeTitle.textContent = titleMatch ? titleMatch[1] : 'Inici';
+                const actionMatch = processedHtml.match(/data-bridge-action="([^"]+)"/i);
+                nativeAction.textContent = actionMatch ? actionMatch[1] : '';
+            }
+
+            // VISUAL BLINK ON PLAY BUTTON
+            playBtnIde.classList.add('blink-play');
+            setTimeout(() => playBtnIde.classList.remove('blink-play'), 400);
+
+            // Inject
+            renderedContent.innerHTML = processedHtml;
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        // Initial render
+        updateGutter();
+        render();
+
+        // Initialize icons
+        lucide.createIcons();
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
